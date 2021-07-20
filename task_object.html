@@ -18,7 +18,7 @@
             this.done = done;
             this.title = title;
             this.dateNum = dueDate;
-            this.dueDate = dueDate.getDate() + ' ' + monthNames[ dueDate.getMonth() - 1 ];
+            this.dueDate = dueDate.getDate() + ' ' + monthNames[ dueDate.getMonth() - 1 ].substring(0, 3);
             this.desc = desc;
         }
 
@@ -34,12 +34,7 @@
 
         getWithFields() {
             toString();
-            if (this.done) {
-                return `Use fields: ${this.title}, ${this.desc}, ${Boolean(this.done)}, (${this.dueDate})`;
-            }
-            else {
-                return `Use fields: ${this.title}, ${this.desc}, ${Boolean(this.done)}, (none)`;
-            }
+            return 'Use fields: title, desc, done, dueDate';
         }
 
         toggle() {

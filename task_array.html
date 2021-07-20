@@ -8,7 +8,104 @@
 <body>
     <script>
 
-   
+        const xVic = 'xxx';
+        const oVic = 'ooo';
+
+        function main() {
+
+            let field = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
+
+            let steps1 = [[0, 0], [0, 1], [1, 1], [0, 2], [2, 2]];
+            // let steps2 = [[0, 3], [1, 3], [0, 1], [0, 5], [2, 5], [2, 1]];
+
+            DisplayCage(field);
+            for( let i = 0; i < steps1.length + 10; i++ ) {
+
+                if(!TestVictory(field)) {
+                    console.log('step ' + i)
+                    if( i % 2 === 0 ) {
+                        field = DoStep(field, steps1[i], 'x');
+                    }
+                    else {
+                        field = DoStep(field, steps1[i], 'o');
+                    }
+                }
+                else if (TestVictory(field) === xVic){
+                    console.log('win X')
+                    break;
+                }
+                else if (TestVictory(field) === oVic){
+                    console.log('win O')
+                    break;
+                }
+            }
+
+        }
+
+        function DoStep(arr, stepArr, sign) {
+            arr[stepArr[0]][stepArr[1]] = sign;
+            DisplayCage(arr);
+            return arr;
+        }
+
+        function DisplayCage(field) {
+            for (let i = 0; i < field.length; i++) {
+                console.log(`|${field[i][0]}|${field[i][1]}|${field[i][2]}|`);
+                console.log();
+            }
+        }
+
+        function TestVictory(field) {
+            let fieldT = TransMatrix(field);
+
+            let answ = TestDiagonal(field) || 
+                TestLine(field) ||
+                TestDiagonal(fieldT) || 
+                TestLine(fieldT);
+
+            return answ;
+        }
+
+        function TestDiagonal( currArr ) {
+            if ( currArr[0][0].concat(currArr[1][1], currArr[2][2]) === xVic) {
+                return xVic;
+            }
+            else if( currArr[0][2].concat(currArr[1][1], currArr[0][2]) === xVic) {
+                return xVic;
+            }
+            else if ( currArr[0][0].concat(currArr[1][1], currArr[2][2]) === oVic) {
+                return oVic;
+            }
+            else if( currArr[0][2].concat(currArr[1][1], currArr[0][2]) === oVic) {
+                return oVic;
+            }
+        }
+
+        function TestLine (field) {
+
+            for( let i = 0; i < 3; i++ ) {
+                if( field[i].join('') === xVic ) {
+                    return xVic;
+                }
+                else if ( field[i].join('') === oVic ) {
+                    return oVic;
+                }
+            }
+        }
+
+        function TransMatrix(A)
+        {
+            let m = A.length, n = A[0].length, AT = [];
+            for (let i = 0; i < n; i++) { 
+                AT[ i ] = [];
+                for (let j = 0; j < m; j++) {
+                    AT[i][j] = A[j][i];
+                }
+            }
+            return AT;
+        }
+    
+        main();
         
     </script>
 </body>
