@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task object</title>
+</head>
+<body>
+    <script>
+
+    let monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    class TaskReview {
+        constructor(countNumber, done, title, dueDate, desc) {
+            this.countNumber = countNumber;
+            this.done = done;
+            this.title = title;
+            this.dateNum = dueDate;
+            this.dueDate = dueDate.getDate() + ' ' + monthNames[dueDate.getMonth()];
+            this.desc = desc;
+        }
+
+        toString() {
+            this.done = this.done === true ? 'x' : ' ';
+            if (this.done === 'x') {
+                return `${this.countNumber}. [${this.done}] ${this.title} (${this.dueDate})`;
+            }
+            else {
+                return `${this.countNumber}. [${this.done}] ${this.title}`;
+            }
+        }
+
+        getWithFields() {
+            toString();
+            if (this.done) {
+                return `Use fields: ${this.title}, ${this.desc}, ${Boolean(this.done)}, (${this.dueDate})`;
+            }
+            else {
+                return `Use fields: ${this.title}, ${this.desc}, ${Boolean(this.done)}, (none)`;
+            }
+        }
+
+        toggle() {
+            this.done = ! this.done;
+        }
+
+        isOverdue() {
+            let curDate = new Date();
+            if (curDate - this.dateNum < 0) {
+                return false; // 'not overdue yet'
+            }
+            else {
+                return true; // 'alredy overdued!'
+            }
+        }
+    }
+
+    let taskCounter = 1;
+
+    let date1 = new Date();
+    date1.setDate(26);
+    date1.setMonth(7);
+    date1.setYear(2021);
+
+    let task1 = new TaskReview(taskCounter, true, 'read', date1, 'blabla');
+
+    console.log(task1.toString());
+    console.log(task1.getWithFields());
+
+    task1.toggle();
+
+    console.log(task1.toString());
+    console.log(task1.isOverdue());
+        
+    </script>
+</body>
+</html>
