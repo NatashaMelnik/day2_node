@@ -18,7 +18,7 @@
             this.done = done;
             this.title = title;
             this.dateNum = dueDate;
-            this.dueDate = dueDate.getDate() + ' ' + monthNames[dueDate.getMonth()];
+            this.dueDate = dueDate.getDate() + ' ' + monthNames[ dueDate.getMonth() - 1 ];
             this.desc = desc;
         }
 
@@ -63,6 +63,7 @@
     date1.setDate(26);
     date1.setMonth(7);
     date1.setYear(2021);
+    console.log(date1)
 
     let task1 = new TaskReview(taskCounter, true, 'read', date1, 'blabla');
 
